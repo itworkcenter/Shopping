@@ -1,9 +1,13 @@
 package com.lifees.shopping;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -11,6 +15,31 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final TextView text = (TextView) findViewById(R.id.selector);
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+
+
+        text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dialog.setTitle("请选择：");
+
+                dialog.setItems(R.array.cities, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String[] item = getResources().getStringArray(R.array.cities);
+
+                        if (!item[i].equals("成都")) {
+                            text.setText(item[i]);
+                        }
+
+                    }
+                });
+                dialog.show();
+            }
+        });
     }
 
     @Override
